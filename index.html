@@ -94,8 +94,9 @@ document.body.innerHTML = "<p>Guardando tus respuestas...</p>";
 
 try {
 
-await fetch("https://script.google.com/macros/s/AKfycbwfbCyYuj0jxCbB6KhX8PDxE8_Skihu4uOYjBsqPnxw6KAOieC4MZ-cq6uM2M31seAoZA/exec", {
+await fetch("https://script.google.com/macros/s/AKfycbyadUhl-RTuqfQuVb_Hzj5uqgOskE7ZiJp88MrFQ2XBfZBdLkG5LV_3d1gvS_RHoKiuRA/exec", {
 method: "POST",
+mode: "no-cors", 
 headers: {
 "Content-Type": "application/json",
 },
@@ -386,13 +387,10 @@ await guardarDatos(datos);
 
 localStorage.setItem("encuesta_completada","true");
 
-// mensaje final definitivo
-document.querySelector(".jspsych-content").innerHTML = `
+document.body.innerHTML = `
 <div style="text-align:center">
-<h2> ¡Respuestas guardadas correctamente!</h2>
-<p> Gracias por hacer el aguante con la encuesta ❤️ </p>
-<p>🇦🇷 Otra coronación de gloria 🇦🇷</p>
-<img src="https://imagenes.elpais.com/resizer/v2/JSQGSLLXSYKA24SW4ACR7CPKVE.jpg?auth=7577d6ae5e9a04654127995e674c6f1bcf6974a71d8e006a9a7cbaf3be247e1e&width=1000" width="200">
+<h2>¡Respuestas guardadas correctamente!</h2>
+<p>Gracias por hacer el aguante con la encuesta ❤️</p>
 </div>
 `;
 }
