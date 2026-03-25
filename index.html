@@ -38,7 +38,7 @@ box-shadow:0 0 10px rgba(0,0,0,0.1);
 
 /* Likert */
 .jspsych-survey-likert-statement{
-font-size:22px;
+font-size:26px;
 margin-bottom:20px;
 }
 
@@ -60,7 +60,7 @@ padding:15px;
 }
 
 .jspsych-survey-likert-statement{
-font-size:18px;
+font-size:22px;
 }
 
 .jspsych-btn{
@@ -68,6 +68,10 @@ font-size:16px;
 padding:10px;
 }
 
+}
+
+input, textarea, select {
+  font-size: 16px;
 }
 
 </style>
@@ -251,8 +255,8 @@ timeline.push({
 type: jsPsychHtmlButtonResponse,
 
 stimulus:`
-<p>A menudo, estos estereotipos son asociados a nuestra historia.</p>
-<p>Actualmente, existe un extenso debate en redes sobre donde comienza esta historia.</p>
+<p>A menudo, estas características son asociadas a nuestra historia.</p>
+<p>Actualmente, existe un extenso debate en redes sobre dónde comienza esta historia.</p>
 <p>Por lo general se mencionan dos orígenes: Europa y Latinoamérica.</p>
 `,
 
@@ -277,7 +281,10 @@ questions:[{
 prompt:"<b> ¿El argentino es algo más? (opcional) </b>",
 rows:2,
 columns:40
-}]
+}],
+on_finish: function(){
+  document.activeElement.blur();
+}
 });
 
 // TRANSICIÓN DEMO
@@ -312,6 +319,9 @@ input.addEventListener("input", function(){
 this.value = this.value.replace(/[^0-9]/g, '');
 });
 
+},
+on_finish: function(){
+  document.activeElement.blur();
 }
 });
 
@@ -342,8 +352,11 @@ type: jsPsychSurveyText,
 data:{tipo:"club"},
 questions:[{
 prompt:"<b>¿De qué equipo sos hincha? (opcional)</b>",
-input_type:"text"
-}]
+input_type:"text",
+}],
+on_finish: function(){
+  document.activeElement.blur();
+}  
 });
 
 // NIVEL EDUCATIVO E IDEOLOGÍA POLÍTICA
@@ -355,7 +368,7 @@ questions:[
     required: true,
     options:["Clase Baja","Clase Media-Baja", "Clase Media", "Clase Media-Alta", "Clase Alta"]},
     
-    {prompt:"<b>Con cual de estas tres posturas políticas te identificarías (opcional) </b>",
+    {prompt:"<b>Con cuál de estas posiciones políticas te sentís más representado (opcional) </b>",
     options:["Izquierda","Centro","Derecha"]}
 ]
 });
@@ -476,8 +489,15 @@ await guardarDatos(limpio);
 
 localStorage.setItem("encuesta_completada","true");
 
-document.body.innerHTML = `
-<div style="text-align:center">
+document.querySelector(".jspsych-content").innerHTML = `
+<div style="
+text-align:center;
+background:rgba(255,255,255,0.95);
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+">
+
 <h2>¡Respuestas guardadas correctamente!</h2>
 <p>Gracias por hacer el aguante con la encuesta ❤️</p>
 </div>
