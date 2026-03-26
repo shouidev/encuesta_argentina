@@ -162,6 +162,14 @@ const jsPsych = initJsPsych({
   auto_update_progress_bar: true
 });;
 
+// VALOR EXPERIMENTAL
+
+let experimento = Math.random() < 0.5 ? 0 : 1;
+
+jsPsych.data.addProperties({
+  experimento: experimento
+});
+
 // ESTEREOTIPOS
 let palabras = [
 "es orgulloso",
@@ -292,7 +300,7 @@ document.querySelector("#jspsych-survey-likert-next").click();
 });
 
 // TRANSICIÓN IDENTIDAD CULTURAL
-
+  
 timeline.push({
 
 type: jsPsychHtmlButtonResponse,
@@ -308,13 +316,29 @@ choices:["Continuar"]
 });
 
 // IDENTIDAD CULTURAL
+
+let opciones_identidad;
+let valores_identidad;
+
+if (experimento === 0) {
+  opciones_identidad = ["Latinoamérica","Europa"];
+  valores_identidad = [0,1];
+} else {
+  opciones_identidad = ["Latinoamérica","Europa","Ambas","Ninguna"];
+  valores_identidad = [0,1,2,3];
+}
+
 timeline.push({
-type: jsPsychHtmlButtonResponse,
-stimulus: `
-<p><b>¿Con cuál de los siguientes grupos crees que la Argentina se asocia mejor?</b></p>
-`,
-choices:["Latinoamérica","Europa"],
-data:{tipo:"identidad_cultural"}
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+  <p><b>¿Con cuál de los siguientes grupos crees que la Argentina se asocia mejor?</b></p>
+  `,
+  choices: opciones_identidad,
+  data:{tipo:"identidad_cultural"},
+
+  on_finish: function(data){
+    data.valor = valores_identidad[data.response];
+  }
 });
 
 // RESPUESTA ABIERTA
@@ -464,7 +488,8 @@ on_load: async function(){
 let raw = jsPsych.data.get().values();
 
 let limpio = {
-timestamp: new Date()
+timestamp: new Date(),
+experimento: experimento
 };
 
 raw.forEach(trial => {
@@ -482,7 +507,8 @@ limpio["est_" + trial.estereotipo] = val+1;
 
 //// IDENTIDAD CULTURAL
 if(trial.tipo === "identidad_cultural"){
-limpio.identidad_cultural = trial.response+1;
+  limpio.identidad_cultural = trial.valor+1;
+}
 }
 
 //// RESPUESTA ABIERTA
