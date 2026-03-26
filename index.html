@@ -495,20 +495,19 @@ experimento: experimento
 raw.forEach(trial => {
 
 //// IDENTIDAD ARGENTINA
-if(trial.tipo === "identidad_argentina"){
-limpio.identidad_arg = Object.values(trial.response)[0]+1;
+if(trial.tipo === "identidad_argentina" && trial.response){
+  limpio.identidad_arg = Object.values(trial.response)[0] + 1;
 }
 
 //// ESTEREOTIPOS
-if(trial.tipo === "estereotipo"){
-let val = Object.values(trial.response)[0];
-limpio["est_" + trial.estereotipo] = val+1;
+if(trial.tipo === "estereotipo" && trial.response){
+  let val = Object.values(trial.response)[0];
+  limpio["est_" + trial.estereotipo] = val + 1;
 }
 
 //// IDENTIDAD CULTURAL
-if(trial.tipo === "identidad_cultural"){
-  limpio.identidad_cultural = trial.valor+1;
-}
+if(trial.tipo === "identidad_cultural" && trial.valor !== undefined){
+  limpio.identidad_cultural = trial.valor + 1;
 }
 
 //// RESPUESTA ABIERTA
@@ -517,8 +516,8 @@ limpio.abierta = trial.response.Q0;
 }
 
 //// EDAD
-if(trial.tipo === "edad"){
-limpio.edad = Number(trial.response.Q0);
+if(trial.tipo === "edad" && trial.response){
+  limpio.edad = Number(trial.response.Q0);
 }
 
 //// GÉNERO
@@ -527,12 +526,12 @@ limpio.genero = trial.response.Q0;
 }
 
 //// PROVINCIA
-if(trial.tipo === "provincia"){
+if(trial.tipo === "provincia" && trial.response){
 limpio.provincia = trial.response.Q0;
 }
 
 //// CLUB
-if(trial.tipo === "club"){
+if(trial.tipo === "club" && trial.response){
 limpio.club = trial.response.Q0;
 }
 
